@@ -123,7 +123,7 @@ router.post('/',(req,res)=>{
 					  console.log(info);
 				  })
   }else{
-  //Si hay error en el captcha 
+  //Si hay error en el captcha.
 	  setTimeout(function(){ 
 		  res.redirect("/");				
 	  }, 1800);
