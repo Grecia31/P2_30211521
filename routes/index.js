@@ -6,7 +6,7 @@ const geoip = require('geoip-lite');
 const nodemailer = require('nodemailer');
 const { request } = require('http');
 const fetch = require('node-fetch');
-require('dotenv').config();
+
 
 const basededatos=path.join(__dirname,"basededatos","basededatos.db");
 const bd=new sqlite3.Database(basededatos, err =>{ 
