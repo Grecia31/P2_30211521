@@ -63,15 +63,15 @@
     <form class="form" action="/" method="POST" id="formulario">
         <h2>Contacto</h2>
         <p type="Nombre:">
-            <input name="nombre" placeholder="indique su nombre completo..." value="<%= tarea.nombre%>">
+            <input name="nombre" placeholder="indique su nombre completo..." id="nombre" value="<%= tarea.nombre%>">
             /p>
 
         <p type="Email:">
-            <input name="email" placeholder="indique su Email..." value="<%= tarea.email%>">
+            <input name="email" placeholder="indique su Email..." id="email" value="<%= tarea.email%>">
         </p>
 
         <p type="comentario:">
-            <input name="comentario" placeholder="indique sus necesidades en este campo..." value="<%= tarea.comentario%>">
+            <input name="comentario" placeholder="indique sus necesidades en este campo..." id="comentario" value="<%= tarea.comentario%>">
         </p>
         <captcha
         class="g-recaptcha"
