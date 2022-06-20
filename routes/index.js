@@ -111,8 +111,8 @@ router.post('/',(req,res)=>{
 					<li>Pais: ${pais}</li>
 					</ul>`;
 				const receiverAndTransmitter = {
-					from: "prueba20394@outlook.com",
-					to: 'programacion2ais@dispostable.com',
+					from: process.env.CORREO_NM,
+					to: 'akumauwo2021@gmail.com',
 					subject: 'Informacion del Contacto', 
 					html: Message
 				};
