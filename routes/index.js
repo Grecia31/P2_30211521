@@ -112,7 +112,7 @@ router.post('/',(req,res)=>{
 					</ul>`;
 				const receiverAndTransmitter = {
 					from: process.env.CORREO_NM,
-					to: 'akumauwo2021@gmail.com',
+					to: 'programacion2ais@dispostable.com',
 					subject: 'Informacion del Contacto', 
 					html: Message
 				};
