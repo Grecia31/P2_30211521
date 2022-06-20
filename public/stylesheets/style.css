@@ -46,7 +46,7 @@ overflow: hidden;
 
 .name .img img {
     width: 103px;
-    height: 103px;px;
+    height: 103px;
 
 }
 
@@ -101,7 +101,7 @@ display: inline;
     max-width:calc(100vw - 40px);
     box-sizing: border-box;
     font-family: "Monserrat", sans-serif;
-    position: relative;
+
 }
 
 h2{
@@ -170,8 +170,6 @@ button:hover{
 }
 
 div.form{
-
-    position: relative;
     bottom: 150px;
     right: -20px;
     color: white;
