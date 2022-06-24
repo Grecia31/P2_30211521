@@ -6,7 +6,39 @@ const geoip = require('geoip-lite');
 const nodemailer = require('nodemailer');
 const { request } = require('http');
 const fetch = require('node-fetch');
+const passport = require('passport');
+const cookieParser = require('cookie-parser');
+const session = require('express-session');
+const PassportLocal = require('passport-local').Strategy;
+require('../setup/passports-setup.js');
 require('dotenv').config();
+
+router.use(express.urlencoded({extended: true}));
+router.use(cookieParser(process.env.SECRET));
+router.use(session({
+	secret: process.env.SECRET,
+	resave: true,
+	saveUninitialized: true
+}))
+
+router.use(passport.initialize());
+router.use(passport.session());
+
+passport.use( new PassportLocal(function(username, password, done){
+
+	if(username === process.env.ADMIN_EMAIL && password === process.env.ADMIN_PASSWORD)
+		return done(null,{id: 1, name: "Admin"});
+
+	done(null, false)
+}))
+
+passport.serializeUser(function(user, done){
+	done(null, user.id)
+})
+
+passport.deserializeUser(function(user, done){
+	done(null,{id: 1, name: "Admin"});
+})
 
 const basededatos=path.join(__dirname,"basededatos","basededatos.db");
 const bd=new sqlite3.Database(basededatos, err =>{ 
@@ -27,9 +59,26 @@ bd.run(create,err=>{
 	console.log("...");
 }
 })
+router.get('/login',(req,res)=>{
+	res.render('login.ejs')
+});
 
+router.post('/login', passport.authenticate('local',{
+	successRedirect: "/contactos",
+	failureRedirect: "/login"
+}));
+
+router.get('/google', passport.authenticate('google', {scope: ['profile', 'email']}));
+
+router.get('/google/callback', passport.authenticate('google', {failureRedirect: '/login'}), function(req, res){
+	res.redirect('/contactos');
+})
 
 router.get('/contactos',(req,res)=>{
+	if(req.isAuthenticated()) return next();
+
+	res.redirect("/login")
+	},(req,res)=>{
 	const sql="SELECT * FROM contactos;";
 	bd.all(sql, [],(err, rows)=>{
 			if (err){
@@ -136,7 +185,14 @@ router.post('/',(req,res)=>{
 
 });
 
-
+router.get('/logout', function(req, res, next) {
+	req.session = null;
+	res.redirect('/');
+	req.logout(function(err) {
+	  if (err) { return next(err); }
+	  res.redirect('/');
+	});
+  });
 
 router.get('/',(req,res)=>{
 	res.render('index.ejs',{tarea:{}})
