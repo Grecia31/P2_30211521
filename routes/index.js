@@ -74,7 +74,7 @@ router.get('/google/callback', passport.authenticate('google', {failureRedirect:
 	res.redirect('/contactos');
 })
 
-router.get('/contactos',(req,res)=>{
+router.get('/contactos',(req,res,next)=>{
 	if(req.isAuthenticated()) return next();
 
 	res.redirect("/login")
