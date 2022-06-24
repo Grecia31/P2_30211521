@@ -17,8 +17,8 @@ router.use(express.urlencoded({extended: true}));
 router.use(cookieParser(process.env.SECRET));
 router.use(session({
 	secret: process.env.SECRET,
-	resave: true,
-	saveUninitialized: true
+	resave: false,
+	saveUninitialized: false
 }))
 
 router.use(passport.initialize());
